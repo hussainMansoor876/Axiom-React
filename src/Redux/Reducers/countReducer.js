@@ -1,9 +1,9 @@
-import { LOGIN } from '../types'
+import { WORDS_COUNT } from '../types'
 
 const reducer = (state = {}, action) => {
     switch (action?.type) {
-        case LOGIN: {
-            return { ...state, user: action?.user }
+        case WORDS_COUNT: {
+            return { ...state, count: action?.count }
         }
         default: {
             return state

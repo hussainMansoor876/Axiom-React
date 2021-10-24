@@ -1,0 +1,7 @@
+.logout {
+    width: 100%;
+    display: flex;
+    justify-content: right;
+    margin: 20px 0 10px 0 !important;
+    padding-right: 20px;
+}

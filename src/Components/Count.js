@@ -1,6 +1,11 @@
 import { useState, useEffect } from 'react'
+import { Button } from 'antd'
+import { useDispatch } from 'react-redux'
+import { removeUser } from '../Redux/Actions/authActions'
+import { wordsLengthCount } from '../Redux/Actions/countActions'
 
 const Count = (props) => {
+    const dispatch = useDispatch()
     const [name, setName] = useState('')
     const [wordsCount, setWordsCount] = useState(0)
     const [obj, setObj] = useState({})
@@ -15,6 +20,8 @@ const Count = (props) => {
 
         console.log('values', value)
         setWordsCount(value?.trim()?.split(' ')?.length)
+
+        dispatch(wordsLengthCount(value?.trim()?.split(' ')?.length))
 
         let wordsArray = value?.trim()?.split(' ')
 
@@ -33,6 +40,9 @@ const Count = (props) => {
 
     return (
         <div>
+            <div className='logout'>
+                <Button type='dashed' onClick={() => dispatch(removeUser())}>Logout</Button>
+            </div>
             <h1>{name}</h1>
             <input placeholder='Enter your Name Here!' onChange={updateName} />
             <p>Characters Count: {name?.length}</p>

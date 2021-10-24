@@ -1,5 +1,7 @@
-import authReducers from './authReducers'
+import authReducer from './authReducer'
+import countReducer from './countReducer'
 
 export {
-    authReducers
+    authReducer,
+    countReducer
 }

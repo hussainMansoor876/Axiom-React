@@ -1,12 +1,14 @@
-import { LOGIN } from '../types'
+import { LOGIN, LOGOUT } from '../types'
 
-const loginUser = async (user) => {
-    await setTimeout(() => {
-        console.log('Hello')
-    }, 2000)
+const loginUser = (user) => {
     return { type: LOGIN, user }
 }
 
+const removeUser = () => {
+    return { type: LOGOUT }
+}
+
 export {
-    loginUser
+    loginUser,
+    removeUser
 }
