@@ -1,7 +1,8 @@
 import './App.css'
-import { useState } from 'react'
-// import { Todo, Count } from './Components'
-import * as Components from './Components'
+import { useState, useEffect } from 'react'
+import { Login, Todo, Count } from './Components'
+import { useSelector } from 'react-redux'
+// import * as Components from './Components'
 
 // const { Todo } = Components
 
@@ -9,6 +10,17 @@ const App = () => {
   const [key, setKey] = useState('')
   const [value, setValue] = useState('')
   const [obj, setObj] = useState({})
+  const [todoTask, setTodoTask] = useState('')
+  const [message, setMessage] = useState("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.")
+  const user = useSelector((state) => state?.user)
+
+  useEffect(() => {
+    console.log('todoTask', todoTask)
+  }, [todoTask])
+
+  useEffect(() => {
+    console.log('user', user)
+  }, [user])
 
   const addKeyValue = () => {
     obj[key] = value
@@ -22,7 +34,11 @@ const App = () => {
 
   return (
     <div>
-      <Components.Count />
+      {/* <PropsDemo message={message} /> */}
+      {user?.email ? <div>
+        <Count todoTask={todoTask} />
+        <Todo setTodoTask={setTodoTask} />
+      </div> : <Login />}
       {/* <Todo /> */}
       {/* <Count /> */}
       {/* <div>
