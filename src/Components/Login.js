@@ -4,7 +4,7 @@ import { Form, Input, Button } from 'antd'
 import { loginUser, removeUser } from '../Redux/Actions/authActions'
 import { Link } from 'react-router-dom'
 import allPaths from '../Config/path'
-import { message } from 'antd'
+import { errorMessage, successMessage } from '../utils/helpers'
 
 const Login = (props) => {
     const { history } = props
@@ -20,11 +20,11 @@ const Login = (props) => {
         if (values?.email === 'admin@admin.com' && values?.password === 'admin') {
             dispatch(loginUser(values))
             console.log('*********')
-            message.success('Successfully LoggedIn!!!')
+            successMessage('Successfully LoggedIn!!!')
             return history.push(allPaths.HOME, values)
         }
 
-        message.error('Invalid Email or Password!')
+        errorMessage('Invalid Email or Password!')
     }
 
     return (
