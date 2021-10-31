@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux'
 import { Form, Input, Button } from 'antd'
 import { loginUser, removeUser } from '../Redux/Actions/authActions'
 import { Link } from 'react-router-dom'
+import axios from 'axios'
 import allPaths from '../Config/path'
 import { errorMessage, successMessage } from '../utils/helpers'
 
@@ -17,14 +18,29 @@ const Login = (props) => {
 
     const onFinish = (values) => {
         console.log('values', values)
-        if (values?.email === 'admin@admin.com' && values?.password === 'admin') {
-            dispatch(loginUser(values))
-            console.log('*********')
-            successMessage('Successfully LoggedIn!!!')
-            return history.push(allPaths.HOME, values)
-        }
+        axios.post(`https://axiom-node-example.herokuapp.com/auth/login`, values)
+            .then((res) => {
+                const { data } = res
+                console.log('data', data)
 
-        errorMessage('Invalid Email or Password!')
+                if (data?.success) {
+                    dispatch(loginUser(data?.user))
+                    console.log('*********')
+                    successMessage(data?.message)
+                    return history.push(allPaths.HOME)
+                }
+
+                errorMessage(data?.message)
+            })
+            .catch(e => console.log('e****', e))
+        // if (values?.email === 'admin@admin.com' && values?.password === 'admin') {
+        //     dispatch(loginUser(values))
+        //     console.log('*********')
+        //     successMessage('Successfully LoggedIn!!!')
+        //     return history.push(allPaths.HOME, values)
+        // }
+
+        // errorMessage('Invalid Email or Password!')
     }
 
     return (
