@@ -1,6 +1,7 @@
 const allPaths = {
     HOME: '/',
-    LOGIN: '/login'
+    LOGIN: '/login',
+    REGISTER: '/register'
 }
 
 export default allPaths

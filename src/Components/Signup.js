@@ -7,10 +7,9 @@ import axios from 'axios'
 import allPaths from '../Config/path'
 import { errorMessage, successMessage } from '../utils/helpers'
 
-const Login = (props) => {
+const Signup = (props) => {
     const { history } = props
     const dispatch = useDispatch()
-    console.log('props', props)
 
     useEffect(() => {
         dispatch(removeUser())
@@ -18,16 +17,14 @@ const Login = (props) => {
 
     const onFinish = (values) => {
         console.log('values', values)
-        axios.post(`https://axiom-node-example.herokuapp.com/auth/login`, values)
+        axios.post(`http://localhost:8081/auth/register`, values)
             .then((res) => {
                 const { data } = res
                 console.log('data', data)
 
                 if (data?.success) {
-                    dispatch(loginUser(data?.user))
-                    console.log('*********')
-                    successMessage(data?.message)
-                    return history.push(allPaths.HOME)
+                    successMessage('Successfully Registered!')
+                    return history.push(allPaths.LOGIN)
                 }
 
                 errorMessage(data?.message)
@@ -45,6 +42,7 @@ const Login = (props) => {
 
     return (
         <div>
+
             <div style={{ display: 'flex', justifyContent: 'center' }}>
                 <div style={{ width: '80%', display: 'flex', justifyContent: 'center' }}>
                     <Form
@@ -54,7 +52,7 @@ const Login = (props) => {
                         style={{ width: '100%' }}
                     // onFinishFailed={onFinishFailed}
                     >
-                        <h1>Login Form</h1>
+                        <h1>Signup Form</h1>
                         <Form.Item
                             name="email"
                             rules={[
@@ -69,6 +67,17 @@ const Login = (props) => {
                             ]}
                         >
                             <Input placeholder='Email Here!' type='email' />
+                        </Form.Item>
+                        <Form.Item
+                            name="userName"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: 'Please input your userName!',
+                                }
+                            ]}
+                        >
+                            <Input placeholder='UserName Here!' />
                         </Form.Item>
 
                         <Form.Item
@@ -92,10 +101,10 @@ const Login = (props) => {
                 </div>
             </div>
             <Button type='primary'>
-                <Link to={allPaths.REGISTER} >Register</Link>
+                <Link to={allPaths.LOGIN} >Log In</Link>
             </Button>
         </div>
     )
 }
 
-export default Login
+export default Signup
