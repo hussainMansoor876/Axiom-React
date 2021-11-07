@@ -100,7 +100,7 @@ const Signup = (props) => {
                     </Form>
                 </div>
             </div>
-            <Button type='primary'>
+            <Button type='primary' style={{ marginLeft: 140 }}>
                 <Link to={allPaths.LOGIN} >Log In</Link>
             </Button>
         </div>

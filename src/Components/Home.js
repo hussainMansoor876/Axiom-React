@@ -5,6 +5,7 @@ import allPaths from '../Config/path'
 import { Button, Image } from 'antd'
 import Lottie from 'react-lottie'
 import coding from '../assets/coding.gif'
+import { Todo } from '.'
 
 const Home = (props) => {
     console.log('props', props)
@@ -16,6 +17,7 @@ const Home = (props) => {
             <h1>This is Home</h1>
             <h1>Email: {user?.email}</h1>
             {/* <img src={coding} /> */}
+            <Todo />
             <Lottie options={{
                 animationData: require('../assets/coding.json')
             }}

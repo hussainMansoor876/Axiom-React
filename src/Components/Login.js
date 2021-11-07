@@ -18,7 +18,7 @@ const Login = (props) => {
 
     const onFinish = (values) => {
         console.log('values', values)
-        axios.post(`https://axiom-node-example.herokuapp.com/auth/login`, values)
+        axios.post(`http://localhost:8081/auth/login`, values)
             .then((res) => {
                 const { data } = res
                 console.log('data', data)
@@ -91,7 +91,7 @@ const Login = (props) => {
                     </Form>
                 </div>
             </div>
-            <Button type='primary'>
+            <Button type='primary' style={{ marginLeft: 140 }}>
                 <Link to={allPaths.REGISTER} >Register</Link>
             </Button>
         </div>

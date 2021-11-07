@@ -1,4 +1,6 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import axios from 'axios'
+import { successMessage, errorMessage } from '../utils/helpers'
 
 const Todo = (props) => {
     const [arr, setArr] = useState([])
@@ -6,14 +8,44 @@ const Todo = (props) => {
     const [isEdit, setEdit] = useState(false)
     const [updateIndex, setIndex] = useState(null)
 
+    useEffect(() => {
+        getAllTodos()
+    }, [])
+
+    const getAllTodos = () => {
+        axios.get(`http://localhost:8081/todo/get_all`)
+            .then((res) => {
+                const { data } = res
+
+                console.log('data', data)
+                if (data?.success) {
+                    setArr(data?.tasks)
+                }
+            })
+            .catch(e => console.log('e****', e))
+    }
+
     const AddTodo = () => {
         if (!task?.length) {
             return console.log('Please Add Task First!')
         }
 
-        arr.push(task)
-        setArr([...arr])
-        props.setTodoTask(task)
+        // arr.push(task)
+        // setArr([...arr])
+
+        axios.post(`http://localhost:8081/todo/add_todo`, { task })
+            .then((res) => {
+                const { data } = res
+                console.log('data', data)
+
+                if (data?.success) {
+                    setArr([...arr, data?.todo])
+                    return successMessage(data?.message)
+                }
+
+                errorMessage(data?.message)
+            })
+            .catch(e => console.log('e****', e))
 
         setTask('')
     }
@@ -21,14 +53,28 @@ const Todo = (props) => {
     const deleteTodo = (index) => {
         // console.log('index', arr.filter((v, i) => i !== index))
         // console.log('arr', arr)
-        arr.splice(index, 1)
-        setArr([...arr])
+        // arr.splice(index, 1)
+        // setArr([...arr])
+        let id = arr[index]?._id
+
+        axios.delete(`http://localhost:8081/todo/delete_todo/${id}`)
+            .then((res) => {
+                const { data } = res
+
+                if (data?.success) {
+                    successMessage(data?.success)
+                    arr.splice(index, 1)
+                    setArr([...arr])
+                }
+                errorMessage(data?.message)
+            })
+            .catch(e => console.log('e****', e))
 
         cancelUpdate()
     }
 
     const editTodo = (index) => {
-        setTask(arr[index])
+        setTask(arr[index]?.task)
         setEdit(true)
         setIndex(index)
     }
@@ -39,7 +85,25 @@ const Todo = (props) => {
     }
 
     const updateTask = () => {
-        arr[updateIndex] = task
+        arr[updateIndex].task = task
+
+        let obj = arr[updateIndex]
+
+        console.log('arr[updateIndex]', obj)
+
+        axios.put(`http://localhost:8081/todo/update_todo`, obj)
+            .then((res) => {
+                const { data } = res
+                console.log('data', data)
+
+                if (data?.success) {
+                    // setArr([...arr, data?.todo])
+                    return successMessage(data?.message)
+                }
+
+                errorMessage(data?.message)
+            })
+            .catch(e => console.log('e****', e))
 
         setTask('')
         setEdit(false)
@@ -65,7 +129,7 @@ const Todo = (props) => {
             <ol>
                 {arr?.map((v, i) => {
                     return <li key={i}>
-                        <span>{v}</span>
+                        <span>{v?.task}</span>
                         &nbsp;
                         <button onClick={() => editTodo(i)}>Edit</button>
                         &nbsp;
