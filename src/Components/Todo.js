@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
+import { useSelector } from 'react-redux'
 import { successMessage, errorMessage } from '../utils/helpers'
 
 const Todo = (props) => {
@@ -7,13 +8,14 @@ const Todo = (props) => {
     const [task, setTask] = useState('')
     const [isEdit, setEdit] = useState(false)
     const [updateIndex, setIndex] = useState(null)
+    const user = useSelector((state) => state?.authReducer?.user)
 
     useEffect(() => {
         getAllTodos()
     }, [])
 
     const getAllTodos = () => {
-        axios.get(`http://localhost:8081/todo/get_all`)
+        axios.get(`http://localhost:8081/todo/get_all/${user?._id}`)
             .then((res) => {
                 const { data } = res
 
@@ -33,7 +35,7 @@ const Todo = (props) => {
         // arr.push(task)
         // setArr([...arr])
 
-        axios.post(`http://localhost:8081/todo/add_todo`, { task })
+        axios.post(`http://localhost:8081/todo/add_todo`, { task, userId: user?._id })
             .then((res) => {
                 const { data } = res
                 console.log('data', data)
@@ -62,9 +64,9 @@ const Todo = (props) => {
                 const { data } = res
 
                 if (data?.success) {
-                    successMessage(data?.success)
+                    successMessage(data?.message)
                     arr.splice(index, 1)
-                    setArr([...arr])
+                    return setArr([...arr])
                 }
                 errorMessage(data?.message)
             })

@@ -85,7 +85,7 @@ const Login = (props) => {
                         <Form.Item
                         >
                             <Button type="primary" block htmlType="submit">
-                                Submit
+                                Login
                             </Button>
                         </Form.Item>
                     </Form>

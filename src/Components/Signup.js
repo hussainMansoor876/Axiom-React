@@ -17,6 +17,10 @@ const Signup = (props) => {
 
     const onFinish = (values) => {
         console.log('values', values)
+
+        if (!values?.lastName) {
+            delete values.lastName
+        }
         axios.post(`http://localhost:8081/auth/register`, values)
             .then((res) => {
                 const { data } = res
@@ -54,6 +58,33 @@ const Signup = (props) => {
                     >
                         <h1>Signup Form</h1>
                         <Form.Item
+                            name="userName"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: 'Please input your userName!',
+                                }
+                            ]}
+                        >
+                            <Input placeholder='UserName Here!' />
+                        </Form.Item>
+                        <Form.Item
+                            name="firstName"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: 'Please input your userName!',
+                                }
+                            ]}
+                        >
+                            <Input placeholder='FIrst Name Here!' />
+                        </Form.Item>
+                        <Form.Item
+                            name="lastName"
+                        >
+                            <Input placeholder='Last Name Here! (Optional)' />
+                        </Form.Item>
+                        <Form.Item
                             name="email"
                             rules={[
                                 {
@@ -69,18 +100,6 @@ const Signup = (props) => {
                             <Input placeholder='Email Here!' type='email' />
                         </Form.Item>
                         <Form.Item
-                            name="userName"
-                            rules={[
-                                {
-                                    required: true,
-                                    message: 'Please input your userName!',
-                                }
-                            ]}
-                        >
-                            <Input placeholder='UserName Here!' />
-                        </Form.Item>
-
-                        <Form.Item
                             name="password"
                             rules={[
                                 {
@@ -94,7 +113,7 @@ const Signup = (props) => {
                         <Form.Item
                         >
                             <Button type="primary" block htmlType="submit">
-                                Submit
+                                Register
                             </Button>
                         </Form.Item>
                     </Form>
