@@ -18,6 +18,10 @@ const Signup = (props) => {
     const onFinish = (values) => {
         console.log('values', values)
 
+        values.address = {
+            ...values
+        }
+
         if (!values?.lastName) {
             delete values.lastName
         }
@@ -109,6 +113,61 @@ const Signup = (props) => {
                             ]}
                         >
                             <Input.Password placeholder='Password Here!' />
+                        </Form.Item>
+                        <Form.Item
+                            name="home"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: 'Please input your home Address!',
+                                },
+                            ]}
+                        >
+                            <Input placeholder='Address Here!' />
+                        </Form.Item>
+                        <Form.Item
+                            name="zipCode"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: 'Please input your zipCode!',
+                                },
+                            ]}
+                        >
+                            <Input placeholder='zipCode Here!' />
+                        </Form.Item>
+                        <Form.Item
+                            name="city"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: 'Please input your city!',
+                                },
+                            ]}
+                        >
+                            <Input placeholder='city Here!' />
+                        </Form.Item>
+                        <Form.Item
+                            name="province"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: 'Please input your province!',
+                                },
+                            ]}
+                        >
+                            <Input placeholder='province Here!' />
+                        </Form.Item>
+                        <Form.Item
+                            name="country"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: 'Please input your country!',
+                                },
+                            ]}
+                        >
+                            <Input placeholder='country Here!' />
                         </Form.Item>
                         <Form.Item
                         >
